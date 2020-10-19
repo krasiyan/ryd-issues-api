@@ -1,0 +1,47 @@
+{
+  "name": "ryd-issues-api",
+  "version": "0.0.0",
+  "homepage": "https://github.com/krasiyan/ryd-issues-api#readme",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krasiyan/ryd-issues-api.git"
+  },
+  "scripts": {
+    "start": "node ./dist",
+    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet && prettier --check .",
+    "test": "jest",
+    "build": "tsc",
+    "dev": "tsnd --respawn ./src"
+  },
+  "author": "Krasiyan Nedelchev <hello@krasiyan.com> (https://krasiyan.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/krasiyan/ryd-issues-api/issues"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@types/eslint": "^7.2.4",
+    "@types/jest": "^26.0.14",
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "eslint": "^7.11.0",
+    "eslint-config-prettier": "^6.13.0",
+    "husky": "^4.3.0",
+    "jest": "^26.6.0",
+    "prettier": "^2.1.2",
+    "ts-jest": "^26.4.1",
+    "ts-node-dev": "^1.0.0",
+    "typescript": "^4.0.3"
+  },
+  "engines": {
+    "node": ">=12.8.0"
+  },
+  "engineStrict": true,
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}
