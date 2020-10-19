@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "node ./dist",
+    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet",
+    "sart": "node ./dist",
     "dev": "tsnd --respawn ./src"
   },
   "author": "Krasiyan Nedelchev <hello@krasiyan.com> (https://krasiyan.com)",
@@ -18,6 +19,11 @@
     "url": "https://github.com/krasiyan/ryd-issues-api/issues"
   },
   "devDependencies": {
+    "@types/eslint": "^7.2.4",
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "eslint": "^7.11.0",
+    "eslint-config-prettier": "^6.13.0",
     "ts-node-dev": "^1.0.0",
     "typescript": "^4.0.3"
   },
