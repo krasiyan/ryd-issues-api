@@ -1,3 +1,5 @@
+![](https://github.com/krasiyan/ryd-issues-api/workflows/ci/badge.svg)
+
 # Ryd coding challenge - issues API
 
 # Resources
