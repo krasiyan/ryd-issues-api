@@ -1,0 +1,15 @@
+{
+  "name": "ryd-issues-api",
+  "version": "0.0.0",
+  "homepage": "https://github.com/krasiyan/ryd-issues-api#readme",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krasiyan/ryd-issues-api.git"
+  },
+  "author": "Krasiyan Nedelchev <hello@krasiyan.com> (https://krasiyan.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/krasiyan/ryd-issues-api/issues"
+  }
+}
