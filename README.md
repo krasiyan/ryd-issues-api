@@ -95,8 +95,8 @@ Response body:
 ```json
 [
   {
-    "agentId": number | undefined,
-    "agentName": string | undefined
+    "id": number,
+    "name": string
   }
 ]
 ```
