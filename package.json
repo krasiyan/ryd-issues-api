@@ -8,9 +8,10 @@
     "url": "git+https://github.com/krasiyan/ryd-issues-api.git"
   },
   "scripts": {
-    "build": "tsc",
+    "start": "node ./dist",
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet && prettier --check .",
-    "sart": "node ./dist",
+    "test": "jest",
+    "build": "tsc",
     "dev": "tsnd --respawn ./src"
   },
   "author": "Krasiyan Nedelchev <hello@krasiyan.com> (https://krasiyan.com)",
@@ -20,11 +21,14 @@
   },
   "devDependencies": {
     "@types/eslint": "^7.2.4",
+    "@types/jest": "^26.0.14",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.13.0",
+    "jest": "^26.6.0",
     "prettier": "^2.1.2",
+    "ts-jest": "^26.4.1",
     "ts-node-dev": "^1.0.0",
     "typescript": "^4.0.3"
   },

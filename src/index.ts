@@ -1,1 +1,1 @@
-console.log("ryd is awesome :)");
+export const ryd = "ryd is awesome :)";
