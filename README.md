@@ -24,7 +24,7 @@ npm start     # executes the output of `npm run build`
 
 This application serves a RESTful API with the following endpoints:
 
-- `POST /api/issues` report a new issue (presumably as a Ryd user).
+- `POST /apiv1/issues` report a new issue (presumably as a Ryd user).
 
 Request body:
 
@@ -48,7 +48,7 @@ Response body:
 }
 ```
 
-- `POST /api/issue/:id/resolve` resolve a `{"status": "assigned"}` issue (presumably as the Ryd support agent currently owning the issue).
+- `POST /apiv1/issue/:id/resolve` resolve a `{"status": "assigned"}` issue (presumably as the Ryd support agent currently owning the issue).
 
 Request body:
 
@@ -64,7 +64,7 @@ Request body:
 }
 ```
 
-- `GET /api/issues` retrieve a list of all issues (presumably as a Ryd support agent).
+- `GET /apiv1/issues` retrieve a list of all issues (presumably as a Ryd support agent).
 
 Response body:
 
@@ -88,7 +88,7 @@ In addition the following query params can be appended (in arbitrary combination
 ?agentId=number
 ```
 
-- `GET /api/agents` retrieve a list of all agents (presumably as a Ryd support agent).
+- `GET /apiv1/agents` retrieve a list of all agents (presumably as a Ryd support agent).
 
 Response body:
 
