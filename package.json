@@ -14,7 +14,9 @@
     "build": "tsc",
     "dev": "tsnd --respawn ./src",
     "db:dev:start": "./scripts/startDevDb.sh",
-    "db:dev:stop": "./scripts/stopDevDb.sh"
+    "db:dev:stop": "./scripts/stopDevDb.sh",
+    "db:dev:migrate": "knex migrate:latest --knexfile ./src/knexfile.ts --env development",
+    "db:dev:rollback": "knex migrate:rollback --knexfile ./src/knexfile.ts --all --env development"
   },
   "author": "Krasiyan Nedelchev <hello@krasiyan.com> (https://krasiyan.com)",
   "license": "MIT",
@@ -53,7 +55,9 @@
   },
   "dependencies": {
     "@hapi/joi": "^15.1.1",
+    "knex": "^0.21.6",
     "koa": "^2.13.0",
-    "koa-joi-router": "^6.0.2"
+    "koa-joi-router": "^6.0.2",
+    "pg": "^8.4.1"
   }
 }
