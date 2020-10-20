@@ -14,6 +14,9 @@ const devConfig: Config = {
   migrations: {
     tableName: "KnexMigrations",
   },
+  seeds: {
+    directory: "./seeds",
+  },
 } as const;
 
 interface KnexConfig {

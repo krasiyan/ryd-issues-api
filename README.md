@@ -21,6 +21,7 @@ npm db:dev:start    # starts the development PostgreSQL Docker container and cre
 npm db:dev:stop     # stops and removes the development PostgreSQL Docker container
 npm db:dev:migrate  # execute all dev DB migrations (up)
 npm db:dev:rollback # rollback all dev DB migrations (down)
+npm db:dev:seed     # clears the database and inserts seed data (agents)
 npm run build       # transpile TypeScript (in /dist)
 npm start           # executes the output of `npm run build`
 ```

@@ -16,7 +16,8 @@
     "db:dev:start": "./scripts/startDevDb.sh",
     "db:dev:stop": "./scripts/stopDevDb.sh",
     "db:dev:migrate": "knex migrate:latest --knexfile ./src/knexfile.ts --env development",
-    "db:dev:rollback": "knex migrate:rollback --knexfile ./src/knexfile.ts --all --env development"
+    "db:dev:rollback": "knex migrate:rollback --knexfile ./src/knexfile.ts --all --env development",
+    "db:dev:seed": "knex seed:run 01_agents.ts --knexfile ./src/knexfile.ts --env development"
   },
   "author": "Krasiyan Nedelchev <hello@krasiyan.com> (https://krasiyan.com)",
   "license": "MIT",
@@ -27,6 +28,7 @@
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@types/eslint": "^7.2.4",
+    "@types/faker": "^5.1.2",
     "@types/jest": "^26.0.14",
     "@types/koa": "^2.11.5",
     "@types/koa-joi-router": "^5.2.4",
@@ -35,6 +37,7 @@
     "@typescript-eslint/parser": "^4.5.0",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.13.0",
+    "faker": "^5.1.0",
     "husky": "^4.3.0",
     "jest": "^26.6.0",
     "joi-extract-type": "^15.0.8",
