@@ -9,9 +9,21 @@
 
 # Development setup
 
-Node 12 LTS (>=12.19.0) must be installed along with a recent NPM (>=6.14.8) (hint: [nvm](https://github.com/nvm-sh/nvm))
+- Node 12 LTS (>=12.19.0) must be installed along with a recent NPM (>=6.14.8) (hint: [nvm](https://github.com/nvm-sh/nvm))
+- A recent version of Docker must be installed
 
-Development commands:
+# Quickstart
+
+In order to run the API locally (in development mode) so that it can be tested, one must run the following commands:
+
+```bash
+npm db:dev:start
+npm db:dev:migrate
+npm db:dev:seed
+npm run dev
+```
+
+# Development commands:
 
 ```bash
 npm run dev         # starts the TypeScript dev server (with an FS watcher)
