@@ -9,16 +9,33 @@
 
 # Development setup
 
-Node 12 LTS (>=12.19.0) must be installed along with a recent NPM (>=6.14.8) (hint: [nvm](https://github.com/nvm-sh/nvm))
+- Node 12 LTS (>=12.19.0) must be installed along with a recent NPM (>=6.14.8) (hint: [nvm](https://github.com/nvm-sh/nvm))
+- A recent version of Docker must be installed
 
-Development commands:
+# Quickstart
+
+In order to run the API locally (in development mode) so that it can be tested, one must run the following commands:
 
 ```bash
-npm run dev   # starts the TypeScript dev server (with an FS watcher)
-npm run lint  # runs tsc, ESLint and Prettier to check the complete codestyle and code formatting
-npm test      # runs the test suite (outputs a code coverage report in the CLI and in [./coverage](./coverage))
-npm run build # transpile TypeScript (in /dist)
-npm start     # executes the output of `npm run build`
+npm db:dev:start
+npm db:dev:migrate
+npm db:dev:seed
+npm run dev
+```
+
+# Development commands:
+
+```bash
+npm run dev         # starts the TypeScript dev server (with an FS watcher)
+npm run lint        # runs tsc, ESLint and Prettier to check the complete codestyle and code formatting
+npm test            # runs the test suite (outputs a code coverage report in the CLI and in [./coverage](./coverage))
+npm db:dev:start    # starts the development PostgreSQL Docker container and creates the `devuser` + the `ryd_issues` DB
+npm db:dev:stop     # stops and removes the development PostgreSQL Docker container
+npm db:dev:migrate  # execute all dev DB migrations (up)
+npm db:dev:rollback # rollback all dev DB migrations (down)
+npm db:dev:seed     # clears the database and inserts seed data (agents)
+npm run build       # transpile TypeScript (in /dist)
+npm start           # executes the output of `npm run build`
 ```
 
 # API endpoints and design
