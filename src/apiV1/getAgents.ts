@@ -1,12 +1,10 @@
 import { Middleware } from "koa";
+
+import { knex } from "../db";
+
 import { Agent } from "./validators";
 
-export const getAgents: Middleware = (ctx) => {
-  const mockAgents: Agent[] = [
-    {
-      id: 1,
-      name: "Test Agent",
-    },
-  ];
-  ctx.body = mockAgents;
+export const getAgents: Middleware = async (ctx) => {
+  const agents: Agent[] = await knex("agents").select("*");
+  ctx.body = agents;
 };
