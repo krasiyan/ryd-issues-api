@@ -19,12 +19,24 @@ const devConfig: Config = {
   },
 } as const;
 
+const testConfig: Config = {
+  client: "sqlite",
+  useNullAsDefault: true,
+  migrations: {
+    tableName: "KnexMigrations",
+  },
+  seeds: {
+    directory: "./seeds",
+  },
+} as const;
+
 interface KnexConfig {
   [key: string]: Config;
 }
 
 const config: KnexConfig = {
   development: devConfig,
+  test: testConfig,
 };
 
 export default config;
