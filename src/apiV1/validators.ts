@@ -22,8 +22,8 @@ export type IssueStatus = Joi.extractType<typeof IssueStatus>;
 export const Issue = NewIssueRequest.keys({
   id: Joi.number().required(),
   status: IssueStatus,
-  agentId: Joi.number(),
-  agentName: Joi.string().max(255),
+  agentId: Joi.number().allow(null),
+  agentName: Joi.string().max(255).allow(null),
 });
 export type Issue = Joi.extractType<typeof Issue>;
 
