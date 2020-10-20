@@ -1,5 +1,12 @@
 import { Middleware } from "koa";
+import { Agent } from "./validators";
 
 export const getAgents: Middleware = (ctx) => {
-  ctx.body = [];
+  const mockAgents: Agent[] = [
+    {
+      id: 1,
+      name: "Test Agent",
+    },
+  ];
+  ctx.body = mockAgents;
 };
