@@ -5,6 +5,7 @@
 # Resources
 
 - [requirements PDF](./requirements.pdf)
+- [Postman collection](./ryd-issues-api.postman_collection.json)
 
 # Development setup
 
@@ -22,7 +23,7 @@ npm start     # executes the output of `npm run build`
 
 # API endpoints and design
 
-This application serves a RESTful API with the following endpoints:
+This application serves a RESTful API with the following endpoints. A [Postman collection](./ryd-issues-api.postman_collection.json) is also available.
 
 - `POST /apiv1/issues` report a new issue (presumably as a Ryd user).
 
