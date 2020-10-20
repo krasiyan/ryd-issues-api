@@ -1,14 +1,17 @@
 import { Middleware } from "koa";
+
+import { knex } from "../db";
+
 import { NewIssueRequest, Issue } from "./validators";
 
-export const createIssue: Middleware = (ctx) => {
-  const mockIssue = <NewIssueRequest>ctx.request.body;
+export const createIssue: Middleware = async (ctx) => {
+  const issue = <NewIssueRequest>ctx.request.body;
 
-  const mockAssignedIssue: Issue = {
-    ...mockIssue,
-    id: 4,
-    status: "new",
-  };
+  const [dbIssue]: Issue[] = await knex
+    .insert({ ...issue, status: "new" })
+    .into("issues")
+    .returning("*");
 
-  ctx.body = mockAssignedIssue;
+  // TODO: assign issue to agent (if available)
+  ctx.body = dbIssue;
 };
