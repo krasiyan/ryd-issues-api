@@ -1,30 +1,10 @@
 import { Middleware } from "koa";
+
+import { knex } from "../db";
+
 import { Issue } from "./validators";
 
-export const getIssues: Middleware = (ctx) => {
-  const mockIssues: Issue[] = [
-    {
-      title: "Resolved Issue",
-      description: "mock",
-      id: 1,
-      status: "resolved",
-      agentId: 1,
-      agentName: "Test Agent",
-    },
-    {
-      title: "Unresolved Issue",
-      description: "mock",
-      id: 2,
-      status: "resolved",
-      agentId: 1,
-      agentName: "Test Agent",
-    },
-    {
-      title: "Unassigned Issue",
-      description: "mock",
-      id: 3,
-      status: "new",
-    },
-  ];
-  ctx.body = mockIssues;
+export const getIssues: Middleware = async (ctx) => {
+  const issues: Issue[] = await knex("issues").select("*");
+  ctx.body = issues;
 };
