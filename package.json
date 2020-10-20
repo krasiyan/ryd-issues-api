@@ -12,7 +12,9 @@
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet && prettier --check .",
     "test": "jest",
     "build": "tsc",
-    "dev": "tsnd --respawn ./src"
+    "dev": "tsnd --respawn ./src",
+    "db:dev:start": "./scripts/startDevDb.sh",
+    "db:dev:stop": "./scripts/stopDevDb.sh"
   },
   "author": "Krasiyan Nedelchev <hello@krasiyan.com> (https://krasiyan.com)",
   "license": "MIT",
