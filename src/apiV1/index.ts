@@ -1,39 +1,74 @@
 import router from "koa-joi-router";
+
 import { createIssue } from "./createIssue";
 import { resolveIssue } from "./resolveIssue";
 import { getIssues } from "./getIssues";
 import { getAgents } from "./getAgents";
+
+import * as validators from "./validators";
 
 const apiv1 = router();
 
 apiv1.route({
   method: "get",
   path: "/ping",
-  validate: {},
-  handler: (ctx) => (ctx.body = "pong"),
+  validate: {
+    output: {
+      200: {
+        body: validators.PingResponse,
+      },
+    },
+  },
+  handler: (ctx) => (ctx.body = { response: "pong" }),
 });
+
 apiv1.route({
   method: "post",
   path: "/issues",
-  validate: {},
+  validate: {
+    type: "json",
+    body: validators.NewIssueRequest,
+    output: {
+      200: {
+        body: validators.Issue,
+      },
+    },
+  },
   handler: createIssue,
 });
+
 apiv1.route({
   method: "post",
   path: "/issues/:id/resolve",
-  validate: {},
+  validate: {
+    type: "json",
+    params: {
+      id: validators.IssueId,
+    },
+    output: { 200: { body: validators.AgentResolveIssueResponse } },
+  },
   handler: resolveIssue,
 });
+
 apiv1.route({
   method: "get",
   path: "/issues",
-  validate: {},
+  validate: {
+    output: {
+      200: {
+        body: validators.Issues,
+      },
+    },
+  },
   handler: getIssues,
 });
+
 apiv1.route({
   method: "get",
   path: "/agents",
-  validate: {},
+  validate: {
+    output: { 200: { body: validators.Agents } },
+  },
   handler: getAgents,
 });
 
