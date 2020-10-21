@@ -32,7 +32,7 @@ export type Issues = Joi.extractType<typeof Issues>;
 
 export const AgentResolveIssueResponse = Issue.keys({
   status: Joi.string().valid("resolved").required(),
-  nextAssignedIssueId: Joi.number().required(),
+  nextAssignedIssueId: Joi.number().allow(null),
 });
 export type AgentResolveIssueResponse = Joi.extractType<
   typeof AgentResolveIssueResponse
