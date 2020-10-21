@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.43% </span>
+                <span class="strong">90.48% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>15/21</span>
+                <span class='fraction'>19/21</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/10</span>
+                <span class='fraction'>12/15</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.43% </span>
+                <span class="strong">90.48% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>15/21</span>
+                <span class='fraction'>19/21</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -103,27 +103,27 @@
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -147,7 +147,7 @@ const errorMiddleware: Middleware = async (ctx, next) =&gt; {
     await next();
   } catch (err) {
     // handle Joi validation error
-    <span class="missing-if-branch" title="else path not taken" >E</span>if (err.isJoi) {
+    if (err.isJoi) {
       ctx.status = err.statusCode;
       ctx.body = {
         name: err.name,
@@ -158,12 +158,12 @@ const errorMiddleware: Middleware = async (ctx, next) =&gt; {
     }
 &nbsp;
     // handle misc bad request errors (i.e. invalid JSON req. body)
-<span class="cstat-no" title="statement not covered" >    if (err?.statusCode === 400 &amp;&amp; err.msg) {</span>
-<span class="cstat-no" title="statement not covered" >      ctx.status = err.statusCode;</span>
-<span class="cstat-no" title="statement not covered" >      ctx.body = {</span>
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (err<span class="branch-0 cbranch-no" title="branch not covered" >?.s</span>tatusCode &gt;= 400 &amp;&amp; err<span class="branch-0 cbranch-no" title="branch not covered" >?.s</span>tatusCode &lt;= 499 &amp;&amp; err.msg) {
+      ctx.status = err.statusCode;
+      ctx.body = {
         msg: err.msg,
       };
-<span class="cstat-no" title="statement not covered" >      return;</span>
+      return;
     }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    console.error("unexpected API error", err);</span>
@@ -184,7 +184,7 @@ export { app };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Wed Oct 21 2020 12:06:42 GMT+0000 (Coordinated Universal Time)
+                at Wed Oct 21 2020 13:58:41 GMT+0000 (Coordinated Universal Time)
             </div>
         </div>
         <script src="../prettify.js"></script>
