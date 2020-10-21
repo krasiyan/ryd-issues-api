@@ -20,6 +20,9 @@ npm db:dev:start
 npm db:dev:migrate
 npm db:dev:seed
 npm run dev
+
+curl http://localhost:1337/apiv1/ping
+curl http://localhost:1337/apiv1/agents | jq
 ```
 
 # Development commands:
@@ -45,7 +48,7 @@ This application serves a RESTful API with the following endpoints. A [Postman c
 
 Request body:
 
-```json
+```
 {
   "title": string,
   "description": string
@@ -54,7 +57,7 @@ Request body:
 
 Response body:
 
-```json
+```
 {
   id: number,
   title: string,
@@ -69,7 +72,7 @@ Response body:
 
 Request body:
 
-```json
+```
 {
   id: number,
   title: string,
@@ -85,15 +88,15 @@ Request body:
 
 Response body:
 
-```json
+```
 [
   {
-    "id": number,
-    "title": string,
-    "description": string,
-    "status": "new" | "assigned" | "resolved",
-    "agentId": number | undefined,
-    "agentName": string | undefined
+    id: number,
+    title: string,
+    description: string,
+    status: "new" | "assigned" | "resolved",
+    agentId: number | undefined,
+    agentName: string | undefined
   }
 ]
 ```
@@ -109,7 +112,7 @@ In addition the following query params can be appended (in arbitrary combination
 
 Response body:
 
-```json
+```
 [
   {
     "id": number,

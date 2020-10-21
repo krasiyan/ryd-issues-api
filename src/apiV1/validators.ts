@@ -8,6 +8,9 @@ export const PingResponse = Joi.object({
 export const IssueId = Joi.number().required();
 export type IssueId = Joi.extractType<typeof IssueId>;
 
+export const AgentId = Joi.number().required();
+export type AgentId = Joi.extractType<typeof AgentId>;
+
 export const NewIssueRequest = Joi.object({
   title: Joi.string().max(255).required(),
   description: Joi.string().max(10000).required(),
@@ -29,6 +32,12 @@ export type Issue = Joi.extractType<typeof Issue>;
 
 export const Issues = Joi.array().items(Issue);
 export type Issues = Joi.extractType<typeof Issues>;
+
+export const IssuesQueryParams = Joi.object({
+  status: IssueStatus.optional(),
+  agentId: AgentId.optional(),
+});
+export type IssuesQueryParams = Joi.extractType<typeof IssuesQueryParams>;
 
 export const AgentResolveIssueResponse = Issue.keys({
   status: Joi.string().valid("resolved").required(),
