@@ -6,6 +6,7 @@
 
 - [requirements PDF](./requirements.pdf)
 - [Postman collection](./ryd-issues-api.postman_collection.json)
+- [`master` branch code coverage report](https://krasiyan.com/ryd-issues-api/) (updated automatically for the `master` branch)
 
 # Development setup
 
@@ -39,6 +40,7 @@ npm db:dev:rollback # rollback all dev DB migrations (down)
 npm db:dev:seed     # clears the database and inserts seed data (agents)
 npm run build       # transpile TypeScript (in /dist)
 npm start           # executes the output of `npm run build`
+npm run publishlcov # publish the lcov HTML report (generated from `npm test`) to GitHub pages
 ```
 
 # API endpoints and design
