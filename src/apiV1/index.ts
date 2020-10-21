@@ -54,6 +54,7 @@ apiv1.route({
   method: "get",
   path: "/issues",
   validate: {
+    query: validators.IssuesQueryParams,
     output: {
       200: {
         body: validators.Issues,
