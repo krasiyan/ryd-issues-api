@@ -14,6 +14,7 @@ const resolveAndAssignNext = async (id: number) => {
       return;
     }
     resolvedIssue = updatedIssue;
+    resolvedIssue.nextAssignedIssueId = null;
 
     const nextUnassignedIssue = await trx("issues")
       .select("id")
@@ -21,7 +22,7 @@ const resolveAndAssignNext = async (id: number) => {
         status: "new",
       })
       .orderBy("id", "asc")
-      .first("id");
+      .first();
 
     if (nextUnassignedIssue?.id) {
       const nextUnassignedIssueId = nextUnassignedIssue.id;
