@@ -17,6 +17,7 @@
 In order to run the API locally (in development mode) so that it can be tested, one must run the following commands:
 
 ```bash
+npm ci
 npm run db:dev:start
 npm run db:dev:migrate
 npm run db:dev:seed
