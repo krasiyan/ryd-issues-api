@@ -121,6 +121,49 @@ Response body:
 ]
 ```
 
+# API error handling
+
+The API will always try to respond with a valid JSON response body. Upon successful requests, a 200-series HTTP status code will be returned.
+
+The API strictly validates the provided request body, url parameters and query parameters. For invalid/malformed request, the API will return a 400-series HTTP status code - e.g.
+
+- `POST /apiv1/issues` report a new issue (presumably as a Ryd user).
+
+Request body:
+
+```
+{
+  "title": 123,
+  "description": "test description"
+
+}
+```
+
+Response body:
+
+```
+{
+  "name": "ValidationError",
+  "details": [
+    {
+      "message": "\"title\" must be a string",
+      "path": [
+        "title"
+      ],
+      "type": "string.base",
+      "context": {
+        "value": 123,
+        "key": "title",
+        "label": "title"
+      }
+    }
+  ],
+  "msg": "child \"title\" fails because [\"title\" must be a string]"
+}
+```
+
+Upon an internal / DB error, the API will respond with a 500 HTTP status code and with an empty response body.
+
 # License
 
 [MIT](./LICENSE.md)

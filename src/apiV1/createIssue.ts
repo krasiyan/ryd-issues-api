@@ -41,9 +41,6 @@ export const createIssue: Middleware = async (ctx) => {
         .returning("*");
 
       ctx.body = createdIssue;
-      if (!ctx.body) {
-        ctx.status = 404;
-      }
     });
   } catch (err) {
     console.error("createIssue DB transaction error", err);
