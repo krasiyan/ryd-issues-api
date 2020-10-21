@@ -1,7 +1,7 @@
 import * as Knex from "knex";
 import { name as fakeName } from "faker";
 
-const seedAgentsCount = 3;
+export const seedAgentsCount = 3;
 
 export const seed = async (knex: Knex): Promise<void> => {
   await knex("issues").del();

@@ -12,6 +12,7 @@ const devConfig: Config = {
     port: DB_PORT,
   },
   migrations: {
+    directory: "./migrations",
     tableName: "KnexMigrations",
   },
   seeds: {
@@ -20,13 +21,17 @@ const devConfig: Config = {
 } as const;
 
 const testConfig: Config = {
-  client: "sqlite",
+  client: "sqlite3",
+  connection: {
+    filename: ":memory:",
+  },
   useNullAsDefault: true,
   migrations: {
+    directory: "./src/migrations",
     tableName: "KnexMigrations",
   },
   seeds: {
-    directory: "./seeds",
+    directory: "./src/seeds",
   },
 } as const;
 
