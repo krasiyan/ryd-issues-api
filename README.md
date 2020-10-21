@@ -18,9 +18,9 @@
 In order to run the API locally (in development mode) so that it can be tested, one must run the following commands:
 
 ```bash
-npm db:dev:start
-npm db:dev:migrate
-npm db:dev:seed
+npm run db:dev:start
+npm run db:dev:migrate
+npm run db:dev:seed
 npm run dev
 
 curl http://localhost:1337/apiv1/ping
