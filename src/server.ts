@@ -19,7 +19,7 @@ const errorMiddleware: Middleware = async (ctx, next) => {
     }
 
     // handle misc bad request errors (i.e. invalid JSON req. body)
-    if (err?.statusCode === 400 && err.msg) {
+    if (err?.statusCode >= 400 && err?.statusCode <= 499 && err.msg) {
       ctx.status = err.statusCode;
       ctx.body = {
         msg: err.msg,

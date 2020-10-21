@@ -16,6 +16,13 @@ describe("resolveIssue - POST /apiv1/issues/:id/resolve", () => {
     status: "new",
   };
 
+  const mockAssignedIssue: validators.Issue = {
+    ...mockIssue,
+    status: "assigned",
+    agentId: 1,
+    agentName: "some agent",
+  };
+
   beforeAll(() => {
     mockKnex.mock(knex);
   });
@@ -39,7 +46,7 @@ describe("resolveIssue - POST /apiv1/issues/:id/resolve", () => {
       .expect(400);
   });
 
-  test("agent tries to resolve non existing issue / issue with a non-assigned status", () => {
+  test("agent tries to resolve non existing issue", () => {
     tracker.on("query", (query) => {
       expect(query.transacting).toEqual(true);
       /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -48,9 +55,9 @@ describe("resolveIssue - POST /apiv1/issues/:id/resolve", () => {
         query.response("BEGIN");
       } else if ((query as any)?.step === 2) {
         expect(query.sql).toEqual(
-          "update `issues` set `status` = ? where `id` = ? and `status` = ?"
+          "select * from `issues` where `id` = ? limit ?"
         );
-        expect(query.bindings).toEqual(["resolved", 12345, "assigned"]);
+        expect(query.bindings).toEqual([12345, 1]);
         query.response([]);
       } else if ((query as any)?.step === 3) {
         expect(query.sql).toEqual("COMMIT;");
@@ -66,6 +73,33 @@ describe("resolveIssue - POST /apiv1/issues/:id/resolve", () => {
       .expect(404);
   });
 
+  test("agent tries to resolve issue which is not currently assigned", () => {
+    tracker.on("query", (query) => {
+      expect(query.transacting).toEqual(true);
+      /* eslint-disable @typescript-eslint/no-explicit-any */
+      if ((query as any)?.step === 1) {
+        expect(query.sql).toEqual("BEGIN;");
+        query.response("BEGIN");
+      } else if ((query as any)?.step === 2) {
+        expect(query.sql).toEqual(
+          "select * from `issues` where `id` = ? limit ?"
+        );
+        expect(query.bindings).toEqual([12345, 1]);
+        query.response([mockIssue]);
+      } else if ((query as any)?.step === 3) {
+        expect(query.sql).toEqual("ROLLBACK");
+        query.response("ROLLBACK");
+      } else {
+        throw new Error("unexpected SQL query");
+      }
+      /* eslint-enable @typescript-eslint/no-explicit-any */
+    });
+    return request(app.callback())
+      .post("/apiv1/issues/12345/resolve")
+      .send({})
+      .expect(409, { msg: "issue not currently assigned" });
+  });
+
   test("agent resolves assigned issue with no followup issue", () => {
     tracker.on("query", (query) => {
       expect(query.transacting).toEqual(true);
@@ -75,17 +109,23 @@ describe("resolveIssue - POST /apiv1/issues/:id/resolve", () => {
         query.response("BEGIN");
       } else if ((query as any)?.step === 2) {
         expect(query.sql).toEqual(
+          "select * from `issues` where `id` = ? limit ?"
+        );
+        expect(query.bindings).toEqual([1, 1]);
+        query.response([mockAssignedIssue]);
+      } else if ((query as any)?.step === 3) {
+        expect(query.sql).toEqual(
           "update `issues` set `status` = ? where `id` = ? and `status` = ?"
         );
         expect(query.bindings).toEqual(["resolved", 1, "assigned"]);
-        query.response([{ ...mockIssue, status: "resolved" }]);
-      } else if ((query as any)?.step === 3) {
+        query.response([{ ...mockAssignedIssue, status: "resolved" }]);
+      } else if ((query as any)?.step === 4) {
         expect(query.sql).toEqual(
           "select `id` from `issues` where `status` = ? order by `id` asc limit ?"
         );
         expect(query.bindings).toEqual(["new", 1]);
         query.response([null]);
-      } else if ((query as any)?.step === 4) {
+      } else if ((query as any)?.step === 5) {
         expect(query.sql).toEqual("COMMIT;");
         query.response("COMMIT");
       } else {
@@ -97,19 +137,13 @@ describe("resolveIssue - POST /apiv1/issues/:id/resolve", () => {
       .post("/apiv1/issues/1/resolve")
       .send({})
       .expect(200, {
-        ...mockIssue,
+        ...mockAssignedIssue,
         status: "resolved",
         nextAssignedIssueId: null,
       });
   });
 
   test("agent resolves assigned issue and gets assigned a followup issue", () => {
-    const mockAssignedIssue: validators.Issue = {
-      ...mockIssue,
-      status: "resolved",
-      agentId: 1,
-      agentName: "some agent",
-    };
     const mockNextIssue: validators.Issue = {
       id: 2,
       title: "issue2",
@@ -125,17 +159,23 @@ describe("resolveIssue - POST /apiv1/issues/:id/resolve", () => {
         query.response("BEGIN");
       } else if ((query as any)?.step === 2) {
         expect(query.sql).toEqual(
+          "select * from `issues` where `id` = ? limit ?"
+        );
+        expect(query.bindings).toEqual([1, 1]);
+        query.response([mockAssignedIssue]);
+      } else if ((query as any)?.step === 3) {
+        expect(query.sql).toEqual(
           "update `issues` set `status` = ? where `id` = ? and `status` = ?"
         );
         expect(query.bindings).toEqual(["resolved", 1, "assigned"]);
-        query.response([mockAssignedIssue]);
-      } else if ((query as any)?.step === 3) {
+        query.response([{ ...mockAssignedIssue, status: "resolved" }]);
+      } else if ((query as any)?.step === 4) {
         expect(query.sql).toEqual(
           "select `id` from `issues` where `status` = ? order by `id` asc limit ?"
         );
         expect(query.bindings).toEqual(["new", 1]);
         query.response([mockNextIssue]);
-      } else if ((query as any)?.step === 4) {
+      } else if ((query as any)?.step === 5) {
         expect(query.sql).toEqual(
           "update `issues` set `status` = ?, `agentId` = ?, `agentName` = ? where `id` = ?"
         );
@@ -148,7 +188,7 @@ describe("resolveIssue - POST /apiv1/issues/:id/resolve", () => {
             agentName: "some agent",
           },
         ]);
-      } else if ((query as any)?.step === 5) {
+      } else if ((query as any)?.step === 6) {
         expect(query.sql).toEqual("COMMIT;");
         query.response("COMMIT");
       } else {

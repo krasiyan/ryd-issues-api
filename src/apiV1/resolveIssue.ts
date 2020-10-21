@@ -2,11 +2,22 @@ import { Middleware } from "koa";
 
 import { knex } from "../db";
 
-import { AgentResolveIssueResponse } from "./validators";
+import { HTTPError, Issue, AgentResolveIssueResponse } from "./validators";
 
 const resolveAndAssignNext = async (id: number) => {
   let resolvedIssue: AgentResolveIssueResponse | undefined;
   await knex.transaction(async (trx) => {
+    const issue: Issue = await trx("issues").select("*").where({ id }).first();
+
+    if (!issue) {
+      return;
+    }
+    if (issue.status !== "assigned") {
+      const error: HTTPError = new Error("issue not currently assigned");
+      error.statusCode = 409; // conflict
+      throw error;
+    }
+
     const [updatedIssue]: AgentResolveIssueResponse[] = await trx("issues")
       .update({ status: "resolved" }, "*")
       .where({ id, status: "assigned" });
@@ -52,6 +63,10 @@ export const resolveIssue: Middleware = async (ctx) => {
     }
   } catch (err) {
     console.error("resolveIssue DB transaction error", err);
+    // re-throw already constructed HTTP errors
+    if (err.statusCode) {
+      throw err;
+    }
     ctx.status = 500;
   }
 };
