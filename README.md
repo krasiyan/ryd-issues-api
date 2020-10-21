@@ -17,9 +17,9 @@
 In order to run the API locally (in development mode) so that it can be tested, one must run the following commands:
 
 ```bash
-npm db:dev:start
-npm db:dev:migrate
-npm db:dev:seed
+npm run db:dev:start
+npm run db:dev:migrate
+npm run db:dev:seed
 npm run dev
 
 curl http://localhost:1337/apiv1/ping
@@ -72,7 +72,7 @@ Response body:
 
 - `POST /apiv1/issue/:id/resolve` resolve a `{"status": "assigned"}` issue (presumably as the support agent currently owning the issue).
 
-Request body:
+Response body:
 
 ```
 {
@@ -125,46 +125,60 @@ Response body:
 
 # API error handling
 
-The API will always try to respond with a valid JSON response body. Upon successful requests, a 200-series HTTP status code will be returned.
+- The API will always try to respond with a valid JSON response body. Upon successful requests, a 200-series HTTP status code will be returned.
 
-The API strictly validates the provided request body, url parameters and query parameters. For invalid/malformed request, the API will return a 400-series HTTP status code - e.g.
+- The API strictly validates the provided request body, url parameters and query parameters. For invalid/malformed request, the API will return a 400-series HTTP status code - e.g.
 
-- `POST /apiv1/issues` report a new issue (presumably as a Ryd user).
+  - `POST /apiv1/issues` report a new issue (presumably as a Ryd user).
 
-Request body:
+  Request body:
 
-```
-{
-  "title": 123,
-  "description": "test description"
+  ```
+  {
+    "title": 123,
+    "description": "test description"
 
-}
-```
+  }
+  ```
 
-Response body:
+  Response body:
 
-```
-{
-  "name": "ValidationError",
-  "details": [
-    {
-      "message": "\"title\" must be a string",
-      "path": [
-        "title"
-      ],
-      "type": "string.base",
-      "context": {
-        "value": 123,
-        "key": "title",
-        "label": "title"
+  ```
+  {
+    "name": "ValidationError",
+    "details": [
+      {
+        "message": "\"title\" must be a string",
+        "path": [
+          "title"
+        ],
+        "type": "string.base",
+        "context": {
+          "value": 123,
+          "key": "title",
+          "label": "title"
+        }
       }
-    }
-  ],
-  "msg": "child \"title\" fails because [\"title\" must be a string]"
-}
-```
+    ],
+    "msg": "child \"title\" fails because [\"title\" must be a string]"
+  }
+  ```
 
-Upon an internal / DB error, the API will respond with a 500 HTTP status code and with an empty response body.
+- Upon business logic errors (i.e. trying to resolve an issue which is not currently assigned to an agent) the API will respond with an appropriate 400-seris HTTP status code - e.g.:
+
+  - `POST /apiv1/issue/:id/resolve` (agent tries to resolve a new or already resolved issue)
+
+  Response status code: 409
+
+  Response body:
+
+  ```
+  {
+    "msg": "issue not currently assigned"
+  }
+  ```
+
+- Upon an internal / DB error, the API will respond with a 500 HTTP status code and with an empty response body.
 
 # License
 

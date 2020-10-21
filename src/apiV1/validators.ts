@@ -55,3 +55,7 @@ export type Agent = Joi.extractType<typeof Agent>;
 
 export const Agents = Joi.array().items(Agent);
 export type Agents = Joi.extractType<typeof Agents>;
+
+export interface HTTPError extends Error {
+  statusCode?: number;
+}
